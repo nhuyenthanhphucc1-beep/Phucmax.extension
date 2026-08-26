@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cài đặt Phucmax Extension</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .steps {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 16px;
+            align-items: flex-start;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .step-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .code {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            color: #333;
+            display: inline-block;
+            margin: 6px 0;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background: #e8e8e8;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box-title {
+            font-weight: 600;
+            color: #1976D2;
+            margin-bottom: 6px;
+        }
+        
+        .info-box-text {
+            font-size: 13px;
+            color: #1565C0;
+            line-height: 1.6;
+        }
+        
+        .status {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            display: none;
+        }
+        
+        .status.success {
+            background: #c8e6c9;
+            color: #1b5e20;
+            border-left: 4px solid #4caf50;
+            display: block;
+        }
+        
+        .status.error {
+            background: #ffcdd2;
+            color: #b71c1c;
+            border-left: 4px solid #f44336;
+            display: block;
+        }
+        
+        .status.info {
+            background: #bbdefb;
+            color: #0d47a1;
+            border-left: 4px solid #2196F3;
+            display: block;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .progress {
+            display: none;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🎮</div>
+            <div class="title">Phucmax Extension</div>
+            <div class="subtitle">Tạo tài khoản Garena tự động</div>
+        </div>
+        
+        <div id="status"></div>
+        <div class="progress"><div class="progress-bar"><div class="progress-fill"></div></div></div>
+        
+        <div class="info-box">
+            <div class="info-box-title">ℹ️ Hướng dẫn nhanh</div>
+            <div class="info-box-text">
+                Bấm nút bên dưới để tải extension. Sau đó vào <strong>chrome://extensions/</strong> và Load unpacked.
+            </div>
+        </div>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <div class="step-title">📥 Tải files</div>
+                    <div class="step-desc">Click nút "Tải Extension" để tải toàn bộ files</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <div class="step-title">📂 Giải nén</div>
+                    <div class="step-desc">Giải nén file ZIP vào một thư mục</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <div class="step-title">⚙️ Mở Extension Manager</div>
+                    <div class="step-desc">Vào <span class="code">chrome://extensions/</span></div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <div class="step-title">🔧 Bật Developer Mode</div>
+                    <div class="step-desc">Bật "Developer mode" ở góc trên phải</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                    <div class="step-title">📦 Load Extension</div>
+                    <div class="step-desc">Click "Load unpacked" → Chọn thư mục extension</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="downloadExtension()">📥 Tải Extension</button>
+            <button class="btn btn-secondary" onclick="openGitHub()">🔗 GitHub</button>
+        </div>
+        
+        <div class="info-box">
+            <div class="info-box-title">✅ Cách dùng</div>
+            <div class="info-box-text">
+                1. Mở trang đăng ký Garena<br>
+                2. Extension sẽ hiện panel bên cạnh<br>
+                3. Nhập tên mẫu (VD: phucmax) và bật Tự động<br>
+                4. Extension sẽ tạo tài khoản liên tục
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Phiên bản: 3.1.0 | <a href="https://github.com/nhuyenthanhphucc1-beep/Phucmax.extension">Source Code</a></p>
+        </div>
+    </div>
+    
+    <input type="file" id="fileInput" class="file-input" accept=".json">
+    
+    <script>
+        function showStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            if (type === 'error') {
+                setTimeout(() => statusEl.className = 'status', 5000);
+            }
+        }
+        
+        function showProgress(show = true) {
+            document.querySelector('.progress').style.display = show ? 'block' : 'none';
+        }
+        
+        function updateProgress(percent) {
+            document.querySelector('.progress-fill').style.width = percent + '%';
+        }
+        
+        async function downloadExtension() {
+            try {
+                showStatus('⏳ Đang tải extension...', 'info');
+                showProgress(true);
+                updateProgress(30);
+                
+                // Tải file JSON từ GitHub
+                const response = await fetch('https://raw.githubusercontent.com/nhuyenthanhphucc1-beep/Phucmax.extension/main/extension-bundle.json');
+                if (!response.ok) throw new Error('Không tải được file JSON');
+                
+                updateProgress(60);
+                const bundle = await response.json();
+                
+                updateProgress(80);
+                
+                // Tạo ZIP file (dùng JSZip hoặc method đơn giản)
+                // Ở đây ta sẽ tạo folder structure manually
+                await downloadAsZip(bundle);
+                
+                updateProgress(100);
+                showStatus('✅ Tải xong! Giải nén và Load unpacked vào Chrome', 'success');
+                showProgress(false);
+                
+            } catch (error) {
+                showStatus('❌ Lỗi: ' + error.message, 'error');
+                showProgress(false);
+            }
+        }
+        
+        async function downloadAsZip(bundle) {
+            // Vì không có JSZip, ta sẽ tạo file individual
+            // Hoặc để đơn giản, hướng dẫn người dùng tải từ GitHub
+            
+            // Tạo và download manifest.json
+            const files = bundle.files;
+            let content = `Phucmax Extension v${bundle.version}\n\n`;
+            content += 'Files to create:\n';
+            content += '- manifest.json\n';
+            content += '- background.js\n';
+            content += '- styles.css\n';
+            content += '- content.js (download từ GitHub)\n\n';
+            content += 'Hướng dẫn:\n';
+            content += '1. Tạo thư mục "phucmax-extension"\n';
+            content += '2. Tải tất cả files từ GitHub vào thư mục\n';
+            content += '3. Chrome -> chrome://extensions/\n';
+            content += '4. Load unpacked -> Chọn thư mục\n\n';
+            content += 'JSON Files Content:\\n\\n';
+            content += JSON.stringify(files, null, 2);\n\n';
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'phucmax-extension-setup.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            // Hướng dẫn download từ GitHub
+            setTimeout(() => {
+                window.open('https://github.com/nhuyenthanhphucc1-beep/Phucmax.extension', '_blank');
+            }, 500);
+        }
+        
+        function openGitHub() {
+            window.open('https://github.com/nhuyenthanhphucc1-beep/Phucmax.extension', '_blank');
+        }
+    </script>
+</body>
+</html>
