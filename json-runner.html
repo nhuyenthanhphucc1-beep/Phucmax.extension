@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phucmax - Dán vào Console để chạy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #4ec9b0; margin-bottom: 10px; }
+        .subtitle { color: #858585; margin-bottom: 25px; }
+        .code-block {
+            background: #252526;
+            border: 1px solid #404040;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+        code {
+            color: #ce9178;
+            font-size: 12px;
+            display: block;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #0e639c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+            font-weight: bold;
+        }
+        .copy-btn:hover { background: #1177bb; }
+        .copy-btn.copied { background: #22c55e; }
+        .steps {
+            background: #1a1a1a;
+            border-left: 3px solid #4ec9b0;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .step {
+            margin: 12px 0;
+            padding: 10px;
+            background: #252526;
+            border-radius: 4px;
+        }
+        .step-num {
+            color: #4ec9b0;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .warning {
+            background: #5a4a1a;
+            border-left: 3px solid #dcdcaa;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .success {
+            background: #1a4a2a;
+            border-left: 3px solid #22c55e;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .code-label {
+            color: #858585;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Phucmax Extension - JSON Runner</h1>
+        <div class="subtitle">Dán code dưới đây vào Console → Extension chạy mãi mãi (không cần reload)</div>
+        
+        <div class="steps">
+            <div class="step">
+                <span class="step-num">📋 BƯỚC 1:</span> Copy code bên dưới
+            </div>
+            <div class="step">
+                <span class="step-num">🌐 BƯỚC 2:</span> Vào trang Garena đăng ký
+            </div>
+            <div class="step">
+                <span class="step-num">⌨️ BƯỚC 3:</span> Nhấn F12 → Tab Console
+            </div>
+            <div class="step">
+                <span class="step-num">📌 BƯỚC 4:</span> Paste code vào console → Enter
+            </div>
+            <div class="step">
+                <span class="step-num">✅ BƯỚC 5:</span> Extension chạy vĩnh viễn!
+            </div>
+        </div>
+
+        <div class="code-label">👇 DÁN ĐOẠN MÃ NÀY VÀO CONSOLE:</div>
+        <div class="code-block" id="mainCode">
+            <button class="copy-btn" onclick="copyCode('mainCode')">📋 COPY</button>
+            <code id="codeText"></code>
+        </div>
+
+        <div class="success">
+            <strong>✅ SAU KHI CHẠY:</strong><br>
+            • Extension panel sẽ hiện bên phải<br>
+            • Reload trang mấy lần nó cũng vẫn chạy<br>
+            • Chỉ mất khi đóng tab
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ LƯU Ý:</strong><br>
+            • Chỉ hoạt động trên trang https://sso.garena.com/universal/register<br>
+            • Nếu đóng tab/browser thì cần dán lại<br>
+            • Để giữ vĩnh viễn → Dùng Load Unpacked
+        </div>
+    </div>
+
+    <script>
+        function generateCode() {
+            const code = `(async () => {
+  console.log('🎮 Phucmax Extension - Loading...');
+  
+  try {
+    const bundle = await fetch('https://raw.githubusercontent.com/nhuyenthanhphucc1-beep/Phucmax.extension/main/extension-bundle.json').then(r => r.json());
+    const contentJs = bundle.files['content.js'];
+    const stylesCss = bundle.files['styles.css'];
+    
+    // Inject CSS
+    const style = document.createElement('style');
+    style.id = 'phucmax-styles';
+    style.textContent = stylesCss;
+    if (!document.getElementById('phucmax-styles')) {
+      document.head.appendChild(style);
+    }
+    
+    // Inject JS
+    if (!window.__phucmax_loaded) {
+      const script = document.createElement('script');
+      script.textContent = contentJs;
+      document.body.appendChild(script);
+      window.__phucmax_loaded = true;
+      
+      console.log('✅ Phucmax Extension loaded!');
+      console.log('📍 Panel hiện bên phải - Bắt đầu tạo tài khoản!');
+    }
+    
+    // Re-inject nếu reload trang
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.__phucmax_loaded && !document.getElementById('garena-tools-overlay')) {
+        const script = document.createElement('script');
+        script.textContent = contentJs;
+        document.body.appendChild(script);
+      }
+    });
+    
+  } catch (e) {
+    console.error('❌ Error:', e.message);
+  }
+})();`;
+            return code;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const code = generateCode();
+            document.getElementById('codeText').textContent = code;
+        });
+
+        function copyCode(elementId) {
+            const code = document.getElementById('codeText').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = event.target;
+                btn.textContent = '✅ ĐÃ COPY!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 COPY';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
