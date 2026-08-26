@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "phucmaxreg",
+  "version": "3.1.0",
+  "description": "Tạo tài khoản Garena tự động - tên mẫu + số thứ tự, mk mẫu, lưu sync, tự xác nhận & đăng ký, tự phát hiện trang thành công & tải lại",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://sso.garena.com/*",
+    "https://api.mail.tm/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://sso.garena.com/universal/register*"],
+      "css": ["styles.css"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
